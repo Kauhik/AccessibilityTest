@@ -1,19 +1,32 @@
 //
 //  ContentView.swift
-//  Nutrition Label
+//  AccessibilityTest
 //
-//  Created by Kaushik Manian on 5/10/25.
+//  Main view displaying all accessibility features
 //
 
 import SwiftUI
 
 struct ContentView: View {
     @State private var searchText = ""
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-    var isAccessibilitySize: Bool {
-        dynamicTypeSize >= .accessibility1
-    }
+    // MARK: - EXERCISE: Support Dynamic Type (Larger Text)
+    // TODO: Uncomment the lines below to support larger text sizes
+    //
+    // INSTRUCTIONS:
+    // 1. Uncomment: @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    // 2. Uncomment the isAccessibilitySize computed property
+    //
+    // WHY? This allows you to hide decorative elements when text is very large,
+    // giving more space for the content users want to read.
+    //
+    // LEARN MORE: See LargerTextTestView.swift
+
+    // @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
+    // var isAccessibilitySize: Bool {
+    //     dynamicTypeSize >= .accessibility1
+    // }
 
     var filteredFeatures: [AccessibilityFeature] {
         if searchText.isEmpty {
@@ -50,14 +63,21 @@ struct ContentView: View {
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        // Hide description at accessibility sizes to save space
-                        if !isAccessibilitySize {
+                        // MARK: - EXERCISE: Hide decorative content at large text sizes
+                        // TODO: Uncomment the code below to hide this description when text is very large
+                        //
+                        // WHY? At accessibility text sizes, screen space is precious.
+                        // Hide non-essential content to make room for important information.
+                        //
+                        // PATTERN: if !isAccessibilitySize { /* decorative content */ }
+
+                        // if !isAccessibilitySize {
                             Text("Discover how apps can support accessibility features to ensure everyone can use them effectively.")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                                 .padding(.top, 4)
                                 .fixedSize(horizontal: false, vertical: true)
-                        }
+                        // }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
@@ -102,22 +122,44 @@ struct ContentView: View {
 
 struct AccessibilityCard: View {
     let feature: AccessibilityFeature
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-    var isAccessibilitySize: Bool {
-        dynamicTypeSize >= .accessibility1
-    }
+    // MARK: - EXERCISE: Support Dark Mode
+    // TODO: Uncomment to access the current color scheme (light/dark mode)
+    //
+    // INSTRUCTIONS:
+    // Uncomment: @Environment(\.colorScheme) var colorScheme
+    //
+    // This is used below to adapt the card background color for dark mode.
+    // LEARN MORE: See DarkInterfaceTestView.swift
+
+    // @Environment(\.colorScheme) var colorScheme
+
+    // MARK: - EXERCISE: Support Dynamic Type
+    // TODO: Uncomment to hide decorative icons at large text sizes
+    //
+    // INSTRUCTIONS:
+    // 1. Uncomment: @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    // 2. Uncomment the isAccessibilitySize computed property
+
+    // @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
+    // var isAccessibilitySize: Bool {
+    //     dynamicTypeSize >= .accessibility1
+    // }
 
     var body: some View {
         HStack(spacing: 16) {
-            // Icon - hide at accessibility sizes
-            if !isAccessibilitySize {
+            // MARK: - EXERCISE: Hide icon at accessibility sizes
+            // TODO: Uncomment the conditional check to hide this icon when text is very large
+            //
+            // WHY? Large text takes up a lot of space. Hide decorative elements to save room.
+
+            // if !isAccessibilitySize {
                 Image(systemName: feature.icon)
                     .font(.system(size: 40))
                     .foregroundStyle(feature.color)
                     .frame(width: 60, height: 60)
-            }
+            // }
 
             // Content
             VStack(alignment: .leading, spacing: 6) {
@@ -126,29 +168,36 @@ struct AccessibilityCard: View {
                     .foregroundStyle(.primary)
                     .fixedSize(horizontal: false, vertical: true)
 
-                // Hide description at accessibility sizes
-                if !isAccessibilitySize {
+                // MARK: - EXERCISE: Hide description at accessibility sizes
+                // TODO: Uncomment the conditional to hide the description when text is large
+
+                // if !isAccessibilitySize {
                     Text(feature.shortDescription)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
-                }
+                // }
             }
 
             Spacer()
 
-            // Chevron - hide at accessibility sizes
-            if !isAccessibilitySize {
+            // MARK: - EXERCISE: Hide chevron at accessibility sizes
+            // TODO: Uncomment the conditional to hide this decorative chevron
+
+            // if !isAccessibilitySize {
                 Image(systemName: "chevron.right")
                     .font(.caption)
                     .foregroundStyle(.tertiary)
-            }
+            // }
         }
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(colorScheme == .dark ? Color(.systemGray6) : Color(.systemBackground))
+                // MARK: - EXERCISE: Adaptive color for dark mode
+                // TODO: Uncomment the conditional color to support dark mode
+                // .fill(colorScheme == .dark ? Color(.systemGray6) : Color(.systemBackground))
+                .fill(Color(.systemBackground))
                 .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
         )
         .overlay(
